@@ -24,4 +24,5 @@ class Robot:
         self.t_matrix = t_matrix
 
     def plot(self):
+        # will plot the robot
         pass
