@@ -1,23 +1,28 @@
-
+import sympy as sym
 
 class Robot:
 
-    def __init__(self, name):
-        self.name = name
-        self.T_components = []
+    def __init__(self):
+        self.dh_table = [] # this contains the dh-table for the robot
+        self.t_matrix = [] # this will be the t-matrix
 
-    def convertDHtoT(dh): # converts dh table to t matrix
-        return T
+    def rotZ(self, theta):
+        # Add edge cases as in MATLAB
+        c = sym.cos(theta)
+        s = sym.sin(theta)
+        return [[c, -s, 0, 0], [s, c, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
 
-    def addTMatrix(T): # append t matrix to self
-        T_components.append(t)
+    def transZ(self, z):
+        return [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, z], [0, 0, 0, 1]]
 
-    def createTMatrix():
-        for t in self.T_components:
+    def transX(self, x):
+        return [[1, 0, 0, x], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
 
+    def rotX(self, theta):
+        # Add edge cases as in MATLAB
+        c = sym.cos(theta)
+        s = sym.sin(theta)
+        return [[1, 0, 0, 0], [0, c, -s, 0], [0, s, c, 0], [0, 0, 0, 1]]
 
-    def getTMatrix(): # get t matrix which is product of all t matrices
-        pass
-
-    def plotRobot():
+    def get_t_matrix(self):
         pass
