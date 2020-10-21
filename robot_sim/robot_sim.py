@@ -1,21 +1,27 @@
 from library.robot import Robot
 from sympy import symbols
+import sympy as sym
 import math
 
 # Define symbolic variables
-q1, l1, d1 = symbols('q1 l1 d1')
+q1, q2, l1, l2 = symbols('q1 q2 l1 l2')
+x, y, z = symbols('x y z')
 
 # Define DH-table
 dh_1 = [q1, 0, l1, 0]
-dh_2 = [-math.pi/4, 0, 0, -math.pi/2]
-dh_3 = [0, d1, 0, 0]
+dh_2 = [q2, 0, l2, 0]
 
-dh = [dh_1, dh_2, dh_3]
+dh = [dh_1, dh_2]
 
 # Define robot
 robot = Robot()
 robot.generate_dh_table(dh)
 robot.generate_t_matrix()
 
-x = robot.t_matrix[0][3]
-print(x)
+X = robot.t_matrix[0][3]
+Y = robot.t_matrix[1][3]
+Z = robot.t_matrix[2][3]
+
+solution = sym.solve((x-X, y-Y), (x, y))
+
+robot.plot()
