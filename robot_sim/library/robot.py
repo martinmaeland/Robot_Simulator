@@ -1,4 +1,4 @@
-from library.calculations import *
+from library.tools import *
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 import sympy as sym
@@ -41,7 +41,7 @@ class Robot:
         # Plotting data
         last_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0, 0, 0, 1]]
         current_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0, 0, 0, 1]]
-        
+
         for t_n in self.t_n:
             current_point = mm(t_n, last_point)
 
