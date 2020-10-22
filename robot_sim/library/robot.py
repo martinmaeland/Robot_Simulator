@@ -31,27 +31,37 @@ class Robot:
 
     def plot(self):
 
-        q1, l1 = sym.symbols('q1 l1')
-
+        q1, q2 = sym.symbols("q1 q2")
 
         # Initiate figure
         fig = plt.figure()
         ax = fig.gca(projection='3d')
 
-        # Plotting data
-        last_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0, 0, 0, 1]]
-        current_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0, 0, 0, 1]]
+        # Initial values
+        last_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,1]]
+        current_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,1]]
+        last_xyz = [0,0,0]
 
+        # Plotting data
         for t_n in self.t_n:
+
             current_point = mm(t_n, last_point)
 
-            x = [current_point[0]]
-            y = [current_point[1]]
-            z = [current_point[2]]
+            f = sym.lambdify([q1, q2], current_point[0][3], "numpy")
+            x = f(0.7,0)
+            g = sym.lambdify([q1, q2], current_point[1][3], "numpy")
+            y = g(0.7, 0)
+            h = sym.lambdify([q1, q2], current_point[2][3], "numpy")
+            z = h(0.7, 0)
 
-            ax.plot([3],[3],[3], marker=".", markersize=20, label='test point')
+            ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z])
+            ax.plot([x], [y], [z], marker=".", markersize=20, label='test point')
+
             last_point = current_point
+            last_xyz = [x,y,z]
 
         # Plot-settings and show
-        ax.set_ylabel('some numbers')
+        ax.set_xlabel('x-axis')
+        ax.set_ylabel('y-axis')
+        ax.set_zlabel('z-axis')
         plt.show()

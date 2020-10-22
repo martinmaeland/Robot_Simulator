@@ -3,9 +3,14 @@ from sympy import symbols
 import sympy as sym
 import math
 
+# test
+
 # Define symbolic variables
-q1, q2, l1, l2 = symbols('q1 q2 l1 l2')
-x, y, z = symbols('x y z')
+q1, q2 = symbols("q1 q2")
+
+# Define link lengths
+l1 = 0.5
+l2 = 1
 
 # Define DH-table
 dh_1 = [q1, 0, l1, 0]
@@ -21,7 +26,5 @@ robot.generate_t_matrix()
 X = robot.t_matrix[0][3]
 Y = robot.t_matrix[1][3]
 Z = robot.t_matrix[2][3]
-
-solution = sym.solve((x-X, y-Y), (x, y))
 
 robot.plot()
