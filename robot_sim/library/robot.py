@@ -38,30 +38,45 @@ class Robot:
         ax = fig.gca(projection='3d')
 
         # Initial values
-        last_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,1]]
-        current_point = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,1]]
+        #last_point = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
+        last_point = self.t_n[0]
+        current_point = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
         last_xyz = [0,0,0]
 
         # Plotting data
-        for t_n in self.t_n:
+        #for i in (range(len(self.t_n))):
+        for i in (range(len(self.t_n))):
 
-            current_point = mm(t_n, last_point)
+            #current_point = mm(self.t_n[-(i+1)], last_point)
+            current_point = mm(last_point, current_point)
 
             f = sym.lambdify([q1, q2], current_point[0][3], "numpy")
-            x = f(0.7,0)
+            x = f(0, 0)
+            print("x_{}: {}".format(i,x))
             g = sym.lambdify([q1, q2], current_point[1][3], "numpy")
-            y = g(0.7, 0)
+            y = g(0, 0)
+            print("y_{}: {}".format(i,y))
             h = sym.lambdify([q1, q2], current_point[2][3], "numpy")
-            z = h(0.7, 0)
+            z = h(0, 0)
+            print("z_{}: {}".format(i,z))
 
-            ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z])
-            ax.plot([x], [y], [z], marker=".", markersize=20, label='test point')
+            ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1)
+            ax.plot([x], [y], [z], marker=".", markersize=13, label='test point', color="grey", zorder=10)
 
             last_point = current_point
+            if i != (len(self.t_n)-1):
+                current_point = self.t_n[i+1]
             last_xyz = [x,y,z]
 
         # Plot-settings and show
         ax.set_xlabel('x-axis')
         ax.set_ylabel('y-axis')
         ax.set_zlabel('z-axis')
+
+        axis_limts = 2
+
+        ax.set_xlim(-axis_limts,axis_limts)
+        ax.set_ylim(-axis_limts,axis_limts)
+        ax.set_zlim(-axis_limts,axis_limts)
+
         plt.show()
