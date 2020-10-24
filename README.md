@@ -18,10 +18,6 @@ Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this
 
 ![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.gif)
 
-## TODO
-- Clean up code, aka make it simpler to create robot instance.
-- Calculate inverse-kinematics from t-matrix.
-
 ## Creating a robot example
 
 ```python
@@ -52,3 +48,12 @@ robot.generate_t_matrix()
 robot.plot(values)
 robot.animate()
 ```
+
+## TODO
+- Clean up code, aka make it simpler to create robot instance.
+- Calculate inverse-kinematics from t-matrix.
+
+## Thoughts
+- The dots represents the joints. Should the base have a dot as well?
+- The tip represents the tool. Should the tool be represented as end of link?
+
