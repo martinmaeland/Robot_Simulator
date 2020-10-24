@@ -4,8 +4,8 @@ This code will simulate robot from DH-table.
 Does work with python 3.8.
 
 ## Roadmap
-- Take DH-table input, calculate all t_n matrices and T matrix. [done]
-- Plot all joints and links based on inital values. 
+- Take DH-table input, calculate all t_n matrices and T matrix. [DONE]
+- Plot all joints and links based on inital values. [DONE]
 - Calculate inverse-kinematics.
 - Input point-cloud and calculate robot trajectory.
 - Animate robot. 
