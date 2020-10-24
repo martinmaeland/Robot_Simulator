@@ -12,11 +12,9 @@ Does work with python 3.8.
 
 ## Status
 Able to plot robot from DH-table, with given initial values.
-
 ![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.png)
 
 Animation of robot where q1 goes from 0 to 2pi. (This is only for testing, does not work properly).
-
 ![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.gif)
 
 ## TODO
