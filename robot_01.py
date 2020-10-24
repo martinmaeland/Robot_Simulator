@@ -1,10 +1,7 @@
 from library.robot import Robot
-#from library.tools import *
 from sympy import symbols
-#import sympy as sym
-#import math
 
-#----ROBOT 1----
+
 # Define symbolic variables
 q1, q2 = symbols("q1 q2")
 variables = [q1, q2]
