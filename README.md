@@ -17,7 +17,7 @@ Does work with python 3.8.
 ## Status
 Able to plot robot from DH-table, with given initial values.
 
-!robot_01(https://github.com/martinmaeland/Robot_Simulator/media/robot_01.png?raw=true)
+!(https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.png)
 
 
 ## Creating a robot example
