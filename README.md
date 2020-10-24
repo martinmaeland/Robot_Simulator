@@ -6,7 +6,6 @@ Does work with python 3.8.
 ## TODO
 - Improve sleekness of creating a robot instance
 - Create inverse-kinematics function
--
 
 ## Roadmap
 - Take DH-table input, calculate all t_n matrices and T matrix.
@@ -17,6 +16,8 @@ Does work with python 3.8.
 
 ## Status
 Able to plot robot from DH-table, with given initial values.
+
+!robot_01(https://github.com/martinmaeland/Robot_Simulator/blob/master/image.jpg?raw=true)
 
 ## Creating a robot example
 
