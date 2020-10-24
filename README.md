@@ -1,11 +1,24 @@
 # Robot Simulator
-This code will simulate robot from dh-table.  
+This code will simulate robot from DH-table.
 
-## TODO:
-- Improve sleekness of creating robot instance
+Does work with python 3.8.
+
+## TODO
+- Improve sleekness of creating a robot instance
 - Create inverse-kinematics function
+-
 
-## Creating a robot
+## Roadmap
+. Take DH-table input, calculate all t_n matrices and T matrix.
+. Plot all joints and links based on inital values.
+. Calculate inverse-kinematics.
+. Input point-cloud and calculate robot trajectory.
+. Animate robot. 
+
+## Status
+Able to plot robot from DH-table, with given initial values.
+
+## Creating a robot example
 
 ```python
 from library.robot import Robot
