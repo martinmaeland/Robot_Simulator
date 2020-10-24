@@ -6,7 +6,7 @@
 
 ## Creating a robot
 
-'''python
+```python
 from library.robot import Robot
 from sympy import symbols
 
