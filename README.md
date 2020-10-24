@@ -1,7 +1,7 @@
 # Robot Simulator
-This code will simulate robot from DH-table.
+The goal is to create instance of a robot from DH-table and simulate robot trajectory from given points.
 
-Does work with python 3.8.
+Works with python 3.8.
 
 ## Roadmap
 - Take DH-table input, calculate all t_n matrices and T matrix. [DONE]
