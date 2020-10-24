@@ -1,7 +1,14 @@
+# Homemade functions
 from library.tools import *
+
+# Plotting tools
 import matplotlib.pyplot as plt
+from celluloid import Camera
 from mpl_toolkits import mplot3d
+
+# Symbolic and math tools
 import sympy as sym
+from sympy.solvers import solve
 import numpy as np
 import math
 
@@ -44,25 +51,27 @@ class Robot:
         last_point = self.t_n[0]
         current_point = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
         last_xyz = [0,0,0]
+        axis_limits = 1
 
         # Plotting data
         for i in (range(len(self.t_n))):
 
             current_point = mm(last_point, current_point)
 
-            f = sym.lambdify(self.variables, current_point[0][3], "numpy")
-            #x = f(0, 0)
-            x = f(*var_values)
-            print("x_{}: {}".format(i,x))
-            g = sym.lambdify(self.variables, current_point[1][3], "numpy")
-            y = g(*var_values)
-            print("y_{}: {}".format(i,y))
-            h = sym.lambdify(self.variables, current_point[2][3], "numpy")
-            z = h(*var_values)
-            print("z_{}: {}".format(i,z))
+            f = sym.lambdify(self.variables, current_point[0][3], "numpy") # define function x = f(variables)
+            x = f(*var_values) # calcualte x
 
-            ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1)
-            ax.plot([x], [y], [z], marker=".", markersize=13, label='test point', color="grey", zorder=10)
+            g = sym.lambdify(self.variables, current_point[1][3], "numpy") # define function y = g(variables)
+            y = g(*var_values) # calculate y
+
+            h = sym.lambdify(self.variables, current_point[2][3], "numpy") # define function z = h(variables)
+            z = h(*var_values) # calculate z
+
+            ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1) # plot link
+            ax.plot([x], [y], [z], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
+
+            if (n := max([x,y,z])) > axis_limits:
+                axis_limits = 1.5*n
 
             last_point = current_point
             if i != (len(self.t_n)-1):
@@ -74,10 +83,53 @@ class Robot:
         ax.set_ylabel('y-axis')
         ax.set_zlabel('z-axis')
 
-        axis_limts = 4
-
-        ax.set_xlim(-axis_limts,axis_limts)
-        ax.set_ylim(-axis_limts,axis_limts)
-        ax.set_zlim(-axis_limts,axis_limts)
+        ax.set_xlim(-axis_limits,axis_limits)
+        ax.set_ylim(-axis_limits,axis_limits)
+        ax.set_zlim(-axis_limits,axis_limits)
 
         plt.show()
+
+    def animate(self):
+
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+        camera = Camera(fig)
+
+        t = np.linspace(0, 2*np.pi, 128, endpoint=False)
+
+        for i in t:
+
+            a = i
+            b = -a
+
+            # Initial values
+            last_point = self.t_n[0]
+            current_point = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
+            last_xyz = [0,0,0]
+
+            # Plotting data
+            for i in (range(len(self.t_n))):
+
+                current_point = mm(last_point, current_point)
+
+                f = sym.lambdify(self.variables, current_point[0][3], "numpy") # define function x = f(variables)
+                x = f(a, b) # calcualte x
+
+                g = sym.lambdify(self.variables, current_point[1][3], "numpy") # define function y = g(variables)
+                y = g(a, b) # calculate y
+
+                h = sym.lambdify(self.variables, current_point[2][3], "numpy") # define function z = h(variables)
+                z = h(a, b) # calculate z
+
+                ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1) # plot link
+                ax.plot([x], [y], [z], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
+
+                last_point = current_point
+                if i != (len(self.t_n)-1):
+                    current_point = self.t_n[i+1]
+                last_xyz = [x,y,z]
+
+            camera.snap()
+
+        anim = camera.animate(interval=50, blit=True)
+        anim.save('media/robot_01.gif', writer='imagemagick')
