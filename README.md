@@ -9,11 +9,11 @@ Does work with python 3.8.
 -
 
 ## Roadmap
-. Take DH-table input, calculate all t_n matrices and T matrix.
-. Plot all joints and links based on inital values.
-. Calculate inverse-kinematics.
-. Input point-cloud and calculate robot trajectory.
-. Animate robot. 
+- Take DH-table input, calculate all t_n matrices and T matrix.
+- Plot all joints and links based on inital values.
+- Calculate inverse-kinematics.
+- Input point-cloud and calculate robot trajectory.
+- Animate robot. 
 
 ## Status
 Able to plot robot from DH-table, with given initial values.
