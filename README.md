@@ -1,23 +1,22 @@
 # Robot Simulator
-This code will simulate robot from DH-table.
+The goal is to create instance of a robot from DH-table and simulate robot trajectory from given points.
 
-Does work with python 3.8.
+Currently using python 3.8.
 
 ## Roadmap
-- Take DH-table input, calculate all t_n matrices and T matrix.
-- Plot all joints and links based on inital values.
+- Take DH-table input, calculate all t_n matrices and t-matrix. [DONE]
+- Plot all joints and links based on inital values. [DONE]
 - Calculate inverse-kinematics.
 - Input point-cloud and calculate robot trajectory.
-- Animate robot. 
+- Animate robot. [SEMI-DONE]
 
 ## Status
 Able to plot robot from DH-table, with given initial values.
-
 ![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.png)
 
-## TODO
-- Improve sleekness of creating a robot instance
-- Create inverse-kinematics function
+Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this only works with manual input of range).
+
+![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.gif)
 
 ## Creating a robot example
 
@@ -47,4 +46,14 @@ robot.initiate_variables(variables)
 robot.generate_dh_table(dh)
 robot.generate_t_matrix()
 robot.plot(values)
+robot.animate()
 ```
+
+## TODO
+- Clean up code, aka make it simpler to create robot instance.
+- Calculate inverse-kinematics from t-matrix.
+
+## Thoughts
+- The dots represents the joints. Should the base have a dot as well?
+- The tip represents the tool. Should the tool be represented as end of link?
+
