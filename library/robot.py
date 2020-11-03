@@ -51,12 +51,14 @@ class Robot:
         last_point = self.t_n[0]
         current_point = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
         last_xyz = [0,0,0]
+        x = y = z = 0
         axis_limits = 1
 
         # Plotting data
         for i in (range(len(self.t_n))):
 
             current_point = mm(last_point, current_point)
+
 
             f = sym.lambdify(self.variables, current_point[0][3], "numpy") # define function x = f(variables)
             x = f(*var_values) # calcualte x
@@ -67,8 +69,8 @@ class Robot:
             h = sym.lambdify(self.variables, current_point[2][3], "numpy") # define function z = h(variables)
             z = h(*var_values) # calculate z
 
-            ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1) # plot link
             ax.plot([x], [y], [z], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
+            ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1) # plot link
 
             if (n := max([x,y,z])) > axis_limits:
                 axis_limits = 1.5*n

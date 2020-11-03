@@ -23,5 +23,5 @@ robot = Robot()
 robot.initiate_variables(variables)
 robot.generate_dh_table(dh)
 robot.generate_t_matrix()
-robot.animate()
-#robot.plot(values)
+#robot.animate() # does not work properly
+robot.plot(values)
