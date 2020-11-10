@@ -4,8 +4,8 @@ The goal is to create instance of a robot from DH-table and simulate robot traje
 Currently using python 3.8.
 
 ## Roadmap
-[X] Take DH-table input, calculate all t_n matrices and t-matrix
-[X] Plot all joints and links based on inital values
+[x] Take DH-table input, calculate all t_n matrices and t-matrix
+[x] Plot all joints and links based on inital values
 [ ] Calculate inverse-kinematics
 [ ] Input point-cloud and calculate robot trajectory
 [ ] Animate robot
