@@ -5,11 +5,11 @@ Currently using python 3.8.
 
 ## Roadmap
 
--[x] Take DH-table input, calculate all t_n matrices and t-matrix 
--[x] Plot all joints and links based on inital values 
--[ ] Calculate inverse-kinematics 
--[ ] Input point-cloud and calculate robot trajectory 
--[ ] Animate robot.
+- [x] Take DH-table input, calculate all t_n matrices and t-matrix
+- [x] Plot all joints and links based on inital values
+- [ ] Calculate inverse-kinematics
+- [ ] Input point-cloud and calculate robot trajectory 
+- [ ] Animate robot
 
 ## Status
 Able to plot robot from DH-table, with given initial values.
@@ -50,11 +50,13 @@ robot.plot(values)
 robot.animate()
 ```
 
-## TODO
--[ ] Clean up code, aka make it simpler to create robot instance
--[ ] Calculate inverse-kinematics from t-matrix
-
 ## Thoughts
 * The dots represents the joints. Should the base have a dot as well?
 * The tip represents the tool. Should the tool be represented as end of link?
+
+## TODO
+- [ ] Clean up code, aka make it simpler to create robot instance
+- [ ] Calculate inverse-kinematics from t-matrix
+
+
 
