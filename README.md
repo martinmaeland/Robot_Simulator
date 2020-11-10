@@ -4,11 +4,11 @@ The goal is to create instance of a robot from DH-table and simulate robot traje
 Currently using python 3.8.
 
 ## Roadmap
-- Take DH-table input, calculate all t_n matrices and t-matrix. [DONE]
-- Plot all joints and links based on inital values. [DONE]
-- Calculate inverse-kinematics.
-- Input point-cloud and calculate robot trajectory.
-- Animate robot. [SEMI-DONE]
+[X] Take DH-table input, calculate all t_n matrices and t-matrix
+[X] Plot all joints and links based on inital values
+[ ] Calculate inverse-kinematics
+[ ] Input point-cloud and calculate robot trajectory
+[ ] Animate robot
 
 ## Status
 Able to plot robot from DH-table, with given initial values.
@@ -50,10 +50,10 @@ robot.animate()
 ```
 
 ## TODO
-- Clean up code, aka make it simpler to create robot instance.
-- Calculate inverse-kinematics from t-matrix.
+[ ] Clean up code, aka make it simpler to create robot instance
+[ ] Calculate inverse-kinematics from t-matrix
 
 ## Thoughts
-- The dots represents the joints. Should the base have a dot as well?
-- The tip represents the tool. Should the tool be represented as end of link?
+* The dots represents the joints. Should the base have a dot as well?
+* The tip represents the tool. Should the tool be represented as end of link?
 
