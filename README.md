@@ -55,7 +55,8 @@ robot.animate()
 * The tip represents the tool. Should the tool be represented as end of link?
 
 ## TODO
-- [ ] Clean up code, aka make it simpler to create robot instance
+- [ ] Clean up code
+  - [ ] Make it simpler to create robot instance
 - [ ] Calculate inverse-kinematics from t-matrix
 
 
