@@ -34,12 +34,22 @@ class Robot:
         t_matrix = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
 
         for row in self.dh_table:
+            
             self.t_n.append(mm(rotZ(row[0]), mm(transZ(row[1]), mm(transX(row[2]), rotX(row[3])))))
 
         for i in range(len(self.t_n)):
             t_matrix = mm(self.t_n[-(i+1)], t_matrix)
 
         self.t_matrix = t_matrix
+
+    def get_t_matrix(self):
+        return self.t_matrix
+
+    def get_p_vector(self):
+        position_vector = []
+        for i in range(len(self.t_matrix[0])):
+            position_vector.append(sym.simplify(self.t_matrix[i][3]))
+        return position_vector
 
     def plot(self, var_values):
 
@@ -59,7 +69,6 @@ class Robot:
 
             current_point = mm(last_point, current_point)
 
-
             f = sym.lambdify(self.variables, current_point[0][3], "numpy") # define function x = f(variables)
             x = f(*var_values) # calcualte x
 
@@ -69,7 +78,7 @@ class Robot:
             h = sym.lambdify(self.variables, current_point[2][3], "numpy") # define function z = h(variables)
             z = h(*var_values) # calculate z
 
-            ax.plot([x], [y], [z], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
+            ax.plot([float(x)], [float(y)], [float(z)], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
             ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1) # plot link
 
             if (n := max([x,y,z])) > axis_limits:

@@ -10,11 +10,31 @@ def mm(M1, M2):
                 res[i][j] += M1[i][k] * M2[k][j]
     return res
 
+# Conversion between rad and deg
+def radToDeg(theta):
+    return math.degrees(theta)
+
+def degToRad(theta):
+    return math.radians(theta)
+
 # Rotation about z
 def rotZ(theta):
-    # todo: add edge cases as in MATLAB
-    c = sym.cos(theta)
-    s = sym.sin(theta)
+    if (theta == degToRad(90)):
+        c = 0
+        s = 1
+    elif (theta == degToRad(180)):
+        c = -1
+        s = 0
+    elif (theta == degToRad(270)):
+        c = 0
+        s = -1
+    elif (theta == 0):
+        c = 1
+        s = 0
+    else:
+        c = sym.cos(theta)
+        s = sym.sin(theta)
+
     return [[c, -s, 0, 0], [s, c, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
 
 # Translation in z
@@ -27,7 +47,20 @@ def transX(x):
 
 # Rotation about x
 def rotX(theta):
-    # todo: add edge cases as in MATLAB
-    c = sym.cos(theta)
-    s = sym.sin(theta)
+    if (theta == degToRad(90)):
+        c = 0
+        s = 1
+    elif (theta == degToRad(180)):
+        c = -1
+        s = 0
+    elif (theta == degToRad(270)):
+        c = 0
+        s = -1
+    elif (theta == 0):
+        c = 1
+        s = 0
+    else:
+        c = sym.cos(theta)
+        s = sym.sin(theta)
+
     return [[1, 0, 0, 0], [0, c, -s, 0], [0, s, c, 0], [0, 0, 0, 1]]

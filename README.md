@@ -1,4 +1,4 @@
-# Robot Simulator
+Robot Simulator
 The goal is to create instance of a robot from DH-table and simulate robot trajectory from given points.
 
 Currently using python 3.8.
@@ -12,7 +12,7 @@ Currently using python 3.8.
 - [ ] Animate robot
 
 ## Status
-Able to plot robot from DH-table, with given initial values.
+Able to pot robot from DH-table, with given initial values.
 ![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.png)
 
 Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this only works with manual input of range).
@@ -59,5 +59,6 @@ robot.animate()
   - [ ] Make it simpler to create robot instance
 - [ ] Calculate inverse-kinematics from t-matrix
 
+This is just a test by using vim.
 
-
+neste linje 2.
