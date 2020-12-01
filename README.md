@@ -58,7 +58,3 @@ robot.animate()
 - [ ] Clean up code
   - [ ] Make it simpler to create robot instance
 - [ ] Calculate inverse-kinematics from t-matrix
-
-This is just a test by using vim.
-
-neste linje 2.
