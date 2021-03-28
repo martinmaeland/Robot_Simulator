@@ -12,12 +12,24 @@ Currently using python 3.8.
 - [ ] Animate robot
 
 ## Status
-Able to pot robot from DH-table, with given initial values.
-![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.png)
+Able to pot robot from DH-table, with given initial values. Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this only works with manual input of range). 
 
-Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this only works with manual input of range).
+<p float="left">
+  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.png" width="400" />
+  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.gif" width="400" /> 
+</p>
 
-![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.gif)
+
+## Setting up the workspace
+
+1. Clone repo.
+2. Install dependencies (from root folder):
+```
+tools/install_dependencies.sh
+```
+> Note: you may need to make the script an executable using `sudo chmod +x tools/install_dependencies.sh`.
+
+3. Follow example in `test` folder.
 
 ## Creating a robot example
 
