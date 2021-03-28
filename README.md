@@ -13,11 +13,11 @@ Currently using python 3.8.
 
 ## Status
 Able to pot robot from DH-table, with given initial values.
-![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.png)
+![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.png)
 
 Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this only works with manual input of range).
 
-![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/media/robot_01.gif)
+![robot_01](https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.gif)
 
 ## Creating a robot example
 
