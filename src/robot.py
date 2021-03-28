@@ -1,4 +1,5 @@
 import sys
+import os
 sys.path.append("../lib")
 
 # Homemade functions
@@ -6,8 +7,9 @@ from tools import *
 
 # Plotting tools
 import matplotlib.pyplot as plt
-from celluloid import Camera
-from mpl_toolkits import mplot3d
+#from mpl_toolkits import mplot3d, is this safe to remove?
+import cv2
+import glob
 
 # Symbolic and math tools
 import sympy as sym
@@ -54,7 +56,7 @@ class Robot:
             position_vector.append(sym.simplify(self.t_matrix[i][3]))
         return position_vector
 
-    def plot(self, var_values):
+    def plot(self, var_values, plt_show=True, save=False, save_loc=""):
 
         # Initiate figure
         fig = plt.figure()
@@ -65,10 +67,21 @@ class Robot:
         current_point = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
         last_xyz = [0,0,0]
         x = y = z = 0
-        axis_limits = 1
+        axis_limits = 4
+
+        # Plot-settings and show
+        ax.set_xlabel('x-axis')
+        ax.set_ylabel('y-axis')
+        ax.set_zlabel('z-axis')
+
+        ax.set_xlim([-axis_limits,axis_limits])
+        ax.set_ylim([-axis_limits,axis_limits])
+        ax.set_zlim([-axis_limits,axis_limits])
 
         # Plotting data
         for i in (range(len(self.t_n))):
+
+            ax.plot([float(x)], [float(y)], [float(z)], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
 
             current_point = mm(last_point, current_point)
 
@@ -81,7 +94,6 @@ class Robot:
             h = sym.lambdify(self.variables, current_point[2][3], "numpy") # define function z = h(variables)
             z = h(*var_values) # calculate z
 
-            ax.plot([float(x)], [float(y)], [float(z)], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
             ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1) # plot link
 
             if (n := max([x,y,z])) > axis_limits:
@@ -92,58 +104,39 @@ class Robot:
                 current_point = self.t_n[i+1]
             last_xyz = [x,y,z]
 
-        # Plot-settings and show
-        ax.set_xlabel('x-axis')
-        ax.set_ylabel('y-axis')
-        ax.set_zlabel('z-axis')
+        if (plt_show == True):
+            plt.show()
 
-        ax.set_xlim(-axis_limits,axis_limits)
-        ax.set_ylim(-axis_limits,axis_limits)
-        ax.set_zlim(-axis_limits,axis_limits)
+        if (save == True):
+            plt.savefig(save_loc)
 
-        plt.show()
+        plt.close()
 
-    def animate(self):
 
-        fig = plt.figure()
-        ax = fig.gca(projection='3d')
-        camera = Camera(fig)
+    def animate(self, trajectory, framerate=1, save_as=""):
 
-        t = np.linspace(0, 2*np.pi, 128, endpoint=False)
+        print("Generating animation...")
 
-        for i in t:
+        # Generate frames
+        frame = 1001
+        for pos in trajectory:
+            self.plot([pos[0], pos[1], pos[2]], plt_show=False, save=True, save_loc="../tmp/frame_" + str(frame) + ".png")
+            frame += 1
 
-            a = i
-            b = -a
+        # Convert frames to video
+        img_array = []
+        for filename in sorted(glob.glob('../tmp/*.png')):
+            img = cv2.imread(filename)
+            height, width, layers = img.shape
+            size = (width,height)
+            img_array.append(img)
+            os.remove(filename)
 
-            # Initial values
-            last_point = self.t_n[0]
-            current_point = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
-            last_xyz = [0,0,0]
+        # Write videofile
+        out = cv2.VideoWriter(save_as+".mp4",cv2.VideoWriter_fourcc(*'DIVX'), framerate, size)
 
-            # Plotting data
-            for i in (range(len(self.t_n))):
+        for i in range(len(img_array)):
+            out.write(img_array[i])
+        out.release()
 
-                current_point = mm(last_point, current_point)
-
-                f = sym.lambdify(self.variables, current_point[0][3], "numpy") # define function x = f(variables)
-                x = f(a, b) # calcualte x
-
-                g = sym.lambdify(self.variables, current_point[1][3], "numpy") # define function y = g(variables)
-                y = g(a, b) # calculate y
-
-                h = sym.lambdify(self.variables, current_point[2][3], "numpy") # define function z = h(variables)
-                z = h(a, b) # calculate z
-
-                ax.plot([last_xyz[0], x], [last_xyz[1], y], [last_xyz[2], z], color="black", zorder=1) # plot link
-                ax.plot([x], [y], [z], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
-
-                last_point = current_point
-                if i != (len(self.t_n)-1):
-                    current_point = self.t_n[i+1]
-                last_xyz = [x,y,z]
-
-            camera.snap()
-
-        anim = camera.animate(interval=50, blit=True)
-        anim.save('media/robot_01.gif', writer='imagemagick')
+        print("Finished, animation saved at '%s'" % (save_as+".avi"))
