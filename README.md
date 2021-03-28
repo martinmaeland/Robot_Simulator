@@ -3,21 +3,28 @@ The goal is to create instance of a robot from DH-table and simulate robot traje
 
 Currently using python 3.8.
 
-## Roadmap
-
+## Plan
+Done:
 - [x] Take DH-table input, calculate all t_n matrices and t-matrix
 - [x] Plot all joints and links based on inital values
-- [ ] Calculate inverse-kinematics
-- [ ] Input point-cloud and calculate robot trajectory
-- [ ] Animate robot
+- [x] Input path and calculate robot trajectory
+- [x] Animate robot
+
+Next:
+- [ ] Plot line where robot has been
+- [ ] Create external path from inkscape or similar and import it for robot to follow
+
+Maybe in the future:
+- [ ] Simplify creating a robot instance (works for now, but effort)
+- [ ] Calculate inverse-kinematics (hard)
 
 ## Status
-Able to pot robot from DH-table, with given initial values. Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this only works with manual input of range). 
+* Plot robot from dh table with given symbolic variables.
+* Add inverse kinematics manually and with a point-based path animate the robot.
 
-<p float="left">
-  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_example.png" width="400" />
-  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_example.mp4" width="400" /> 
-</p>
+Video of robot can be seen here: [/res](res)
+
+![](https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_example.png)
 
 ## Setting up the workspace
 
@@ -31,10 +38,6 @@ tools/install_dependencies.sh
 3. Follow example in `test` folder.
 
 ## Thoughts
-* The dots represents the joints. Should the base have a dot as well?
-* The tip represents the tool. Should the tool be represented as end of link?
 
 ## TODO
-- [ ] Clean up code
-  - [ ] Make it simpler to create robot instance
-- [ ] Calculate inverse-kinematics from t-matrix
+- [ ] Check up on inverse kinematics solution, something seems off.
