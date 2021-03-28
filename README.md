@@ -15,10 +15,9 @@ Currently using python 3.8.
 Able to pot robot from DH-table, with given initial values. Animation of robot where q1 is element in [0, 2*pi] and q2 = -q1 . (For now this only works with manual input of range). 
 
 <p float="left">
-  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.png" width="400" />
-  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_01.gif" width="400" /> 
+  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_example.png" width="400" />
+  <img src="https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_example.mp4" width="400" /> 
 </p>
-
 
 ## Setting up the workspace
 
