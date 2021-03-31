@@ -19,43 +19,29 @@ import math
 
 class Robot:
 
-    def __init__(self):
-        self.variables = [] # this is all the variables
-        self.variable_values = [] #this is current variable values
-        self.dh_table = [] # this represents dh-table
-        self.t_n = [] # this contains all t_n matrices
-        self.t_matrix = [] # this is the t-matrix
+    def __init__(self, variables, dh_table):
+        self.variables = variables # this is all the variables
+        self.dh_table = dh_table # this represents dh-table
 
-    def initiate_variables(self, vars):
-        for var in vars:
-            var = sym.symbols("{}".format(var))
-            self.variables.append(var)
+        # Run these methods at cronstruction
+        self.generate_transformation_matrix()
 
-    def generate_dh_table(self, dh):
-        for row in dh:
-            self.dh_table.append(row)
+    # Member variables
+    variable_values = [] #this is current variable values
+    t_n = [] # this contains all t_n matrices
+    t_matrix = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]] # this is the t-matrix
+    robot_origin = [0,0,0,1]
 
-    def generate_t_matrix(self):
-        t_matrix = [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
 
+    # this function generates transformation-matrix from dh-table
+    def generate_transformation_matrix(self):
         for row in self.dh_table:
-
             self.t_n.append(mm(rotZ(row[0]), mm(transZ(row[1]), mm(transX(row[2]), rotX(row[3])))))
 
         for i in range(len(self.t_n)):
-            t_matrix = mm(self.t_n[-(i+1)], t_matrix)
+            self.t_matrix = mm(self.t_n[-(i+1)], self.t_matrix)
 
-        self.t_matrix = t_matrix
-
-    def get_t_matrix(self):
-        return self.t_matrix
-
-    def get_p_vector(self):
-        position_vector = []
-        for i in range(len(self.t_matrix[0])):
-            position_vector.append(sym.simplify(self.t_matrix[i][3]))
-        return position_vector
-
+    # this function plots robot
     def plot(self, var_values, plt_show=True, save=False, save_loc=""):
 
         # Initiate figure
@@ -140,3 +126,57 @@ class Robot:
         out.release()
 
         print("Finished, animation saved at '%s'" % (save_as+".avi"))
+
+
+    # TESTS: these functions are under progress!
+
+    # this is a test-method that calculates joint positions from variable value input
+    def forward_kinematics_test(self, variable_values=[0, 0, 0]):
+
+        t_n = np.array(self.t_n)
+        joint_output_coordinates = []
+        output = []
+
+        # base
+        base = self.robot_origin
+        joint_output_coordinates.append(base)
+
+        # joint 1
+        joint_1 = list(t_n[0].dot(joint_output_coordinates[0]))
+        for coordinate in range(len(joint_1)):
+            function = sym.lambdify(self.variables, joint_1[coordinate], "numpy")
+            joint_1[coordinate] = function(*variable_values)
+        joint_output_coordinates.append(joint_1)
+
+        # joint 2
+        t_n[1] = t_n[0].dot(t_n[1])
+        joint_2 = list(t_n[1].dot(joint_output_coordinates[1]))
+        for coordinate in range(len(joint_2)):
+            function = sym.lambdify(self.variables, joint_2[coordinate], "numpy")
+            joint_2[coordinate] = function(*variable_values)
+        joint_output_coordinates.append(joint_2)
+
+        # joint 3
+        t_n[2] = (t_n[0].dot(t_n[1])).dot(t_n[2])
+        joint_3 = list(t_n[2].dot(joint_output_coordinates[2]))
+        for coordinate in range(len(joint_3)):
+            function = sym.lambdify(self.variables, joint_3[coordinate], "numpy")
+            joint_3[coordinate] = function(*variable_values)
+        joint_output_coordinates.append(joint_3)
+
+        return joint_output_coordinates
+
+    def plot_test(self):
+
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+
+        joints = self.forward_kinematics_test([0, 0 ,0])
+
+        # plot link 1:
+        ax.plot([joints[0][0], joints[1][0]], [joints[0][1], joints[1][1]], [joints[0][2], joints[1][2]], color="black", zorder=1)
+
+        # plot link 2:
+        ax.plot([joints[1][0], joints[2][0]], [joints[1][1], joints[2][1]], [joints[1][2], joints[2][2]], color="black", zorder=1)
+
+        plt.show()

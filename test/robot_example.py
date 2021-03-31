@@ -28,7 +28,7 @@ def main():
     dh_1 = [q1, l1, 0.0, degToRad(90)]
     dh_2 = [q2, 0.0, l2, 0.0]
     dh_3 = [q3, 0.0, l3, degToRad(90)]
-    dh = [dh_1, dh_2, dh_3]
+    dh_table = [dh_1, dh_2, dh_3]
 
     # Step 4: solve inverse kinematics manually
     def inverse_kinematics(x, z):
@@ -62,24 +62,18 @@ def main():
     for i in range(len(x)):
         trajectory.append(inverse_kinematics(x[i], z[i]+2))
 
-    # Step 6: create robot instance
-    robot = Robot()
+    # Step 6: create robot instance with symbolic variables and dh-table
+    robot = Robot(variables, dh_table)
 
-    # Step 7: tell robot what symbolic variables exists
-    robot.initiate_variables(variables)
+    # Step 7: plot robot with wanted end effector position
+    #robot.plot([0, np.pi/4, -np.pi/4])
 
-    # Step 8: tell robot it's dh table
-    robot.generate_dh_table(dh)
-
-    # Step 9: tell robot to generate 'forward kinematics' matrix
-    robot.generate_t_matrix()
-
-    # Step 10: plot robot with wanted end effector position
-    robot.plot(inverse_kinematics(1.0, 2.0))
-
-    # Step 10: animate robot from trajectory
+    # Step 7: animate robot from trajectory
     # nb: be careful to not overwrite your files
     #robot.animate(trajectory, framerate=10, save_as="../res/robot_example")
+
+    # TEST
+    robot.plot_test()
 
 if __name__ == "__main__":
     main()
