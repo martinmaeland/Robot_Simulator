@@ -1,6 +1,0 @@
-Dependencies
-
-* numpy (1.19.3)
-* matplotlib (3.3.3)
-* sympy (1.6.2)
-* celluloid (0.2.0)

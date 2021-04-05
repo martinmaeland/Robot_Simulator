@@ -66,14 +66,11 @@ def main():
     robot = Robot(variables, dh_table)
 
     # Step 7: plot robot with wanted end effector position
-    #robot.plot([0, np.pi/4, -np.pi/4])
+    robot.plot([0, np.pi/4, -np.pi/4])
 
     # Step 7: animate robot from trajectory
     # nb: be careful to not overwrite your files
     #robot.animate(trajectory, framerate=10, save_as="../res/robot_example")
-
-    # TEST
-    robot.plot_test()
 
 if __name__ == "__main__":
     main()
