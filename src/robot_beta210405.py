@@ -77,7 +77,6 @@ class Robot:
 
         return points
 
-
     def inverse_kinematics(self):
         return None
 
@@ -100,5 +99,40 @@ class Robot:
         for point in range(len(points)-1):
             ax.plot([points[point][0]], [points[point][1]], [points[point][2]], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
             ax.plot([points[point][0], points[point+1][0]], [points[point][1], points[point+1][1]], [points[point][2], points[point+1][2]], color="black", zorder=1) # plot link
+
+        plt.show()
+
+    def animate(self, robot_angles, path):
+
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.gca(projection='3d')
+
+        ax.set_xlabel('x-axis')
+        ax.set_ylabel('y-axis')
+        ax.set_zlabel('z-axis')
+
+        path_index = 1
+        for angle in robot_angles:
+            # get joint points from forward kinematic
+            points = self.forward_kinematics(angle)
+            
+            # plot path
+            ax.plot(path[0][:path_index], path[1][:path_index], path[2][:path_index])
+            path_index += 1 
+
+            # plot links and joints
+            for point in range(len(points)-1):
+                ax.plot([points[point][0]], [points[point][1]], [points[point][2]], marker=".", markersize=13, label='test point', color="grey", zorder=10) # plot joint
+                ax.plot([points[point][0], points[point+1][0]], [points[point][1], points[point+1][1]], [points[point][2], points[point+1][2]], color="black", zorder=1) # plot link
+
+            ax.set_xlim([-self.axis_limits,self.axis_limits])
+            ax.set_ylim([-self.axis_limits,self.axis_limits])
+            ax.set_zlim([-self.axis_limits,self.axis_limits])
+
+            # update plot
+            if (angle != robot_angles[-1]):
+                plt.draw()
+                plt.pause(0.1)
+                plt.cla()
 
         plt.show()

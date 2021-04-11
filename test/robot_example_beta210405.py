@@ -1,3 +1,4 @@
+# Add libraries to python path
 import sys
 sys.path.append("../lib")
 sys.path.append("../src")
@@ -9,8 +10,6 @@ from tools import *
 # Import from python libraries
 import numpy as np
 from sympy import symbols
-import math
-
 
 def main():
 
@@ -32,48 +31,50 @@ def main():
 
     # Step 4: solve inverse kinematics manually
     def inverse_kinematics(x, z):
-        # Find q3 with respect to x and z
-        triangle_q3 = 2*math.asin(math.sqrt(x**2 + z**2) / 3)
-        q3 = -round(degToRad(180)-triangle_q3, 2)
 
-        # Find q2 with respect to q3
-        z_contribution = 0
-        if (z > 0):
-             z_contribution = math.atan(x/z)
-        elif (z < 0):
-            z_contribution = -math.atan(x/z)
+        diagonal = np.sqrt( np.power(x, 2) + np.power(z-l1, 2) ) # calculate diagonal length to point using pythagoras
+        if (z>=l1):
+            theta = np.arccos((x)/(np.sqrt((np.power(x, 2) + np.power(z-l1, 2))))) # calculate angle of diagonal
+        else:
+            theta = -np.arccos((x)/(np.sqrt((np.power(x, 2) + np.power(z-l1, 2))))) # calculate angle of diagonal
+        print(theta)
 
-        q2 = degToRad(90) - triangle_q3/2 + z_contribution
-        q2 = round(q2, 2)
+        q3 = -(np.pi/2 - 2*(np.pi/4 - np.arccos(diagonal/3)))
+        q2 = np.arccos(diagonal/3) + theta
+        q1 = 0
 
-        # Return q1, q2, q2
-        # q1 is currently constant at 0 degrees
-        return 0, q2, q3
+        #print(np.rad2deg(q2), np.rad2deg(q3))
+        return q1, q2, q3
 
     # Step 5: calculate trajectory using inverse kinematics
 
+    n_points = 50
+
     # Generate points on a circle
-    theta = np.linspace(0, 2*np.pi, 50)
-    z = np.cos(theta)
-    x = np.sin(theta)
+    theta = np.linspace(0, 2*np.pi, n_points)
+
+    x = 2 + 0.5*np.cos(theta)
+    y = 0*theta
+    z = 1.5 + 0.5*np.sin(theta)
+    
+    path = [[*x], [*y], [*z]]
 
     # Calculate trajectory from points
-    trajectory = []
-    for i in range(len(x)):
-        trajectory.append(inverse_kinematics(x[i], z[i]+2))
-
+    robot_angles = []
+    for i in range(n_points):
+        point = inverse_kinematics(x[i], z[i])
+        robot_angles.append(point)
+    
     # Step 6: create robot instance with symbolic variables and dh-table
     robot = Robot(variables, dh_table)
 
     # Step 7: plot robot with wanted end effector position
-    #robot.plot([0, np.pi/4, -np.pi/4])
+    #robot.plot(inverse_kinematics(1.5, 1))
 
-    # Step 7: animate robot from trajectory
-    # nb: be careful to not overwrite your files
-    #robot.animate(trajectory, framerate=10, save_as="../res/robot_example")
+    # Step 7: animate robot
+    robot.animate(robot_angles, path)
 
     # TEST
-    robot.plot([0,np.pi/2,-np.pi/4])
 
 if __name__ == "__main__":
     main()
