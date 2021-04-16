@@ -1,11 +1,7 @@
 # Robot Simulator
 The goal is to create instance of a robot from DH-table and simulate robot trajectory from given points.
 
-Update(16.03.21):
-Custom path now supported. The path generator tools is provisional and unwanted manual work is required for things to work.
-
-Update (11.04.21):
-I think the inverse-kinematics problems are fixed. The animation method now does one simulation of the robot following the given path, however, the save figure function is currently unavailable (will look into this later, but cooler to see it 'live'). The inverse kinematics and path points needs to be generated manually; because of this the animation method needs an array with all the angles calculated from the inverse kinematics function and the path points.
+Robot_Path_Generator ?
 
 ## Plan
 Done:
@@ -45,7 +41,12 @@ tools/install_dependencies.sh
 
 3. Follow example in `test` folder.
 
-## Thoughts
+## Updates
+Written updates from sessions. Easier to look back at changes this way.
 
-## TODO
-- [x] Check up on inverse kinematics solution, something seems off.
+Update 16.03.21:
+Custom path now supported. The path generator tools is provisional and unwanted manual work is required for things to work.
+
+Update 11.04.21:
+I think the inverse-kinematics problems are fixed. The animation method now does one simulation of the robot following the given path, however, the save figure function is currently unavailable (will look into this later, but cooler to see it 'live'). The inverse kinematics and path points needs to be generated manually; because of this the animation method needs an array with all the angles calculated from the inverse kinematics function and the path points.
+
