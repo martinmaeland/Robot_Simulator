@@ -1,8 +1,6 @@
 # Robot Simulator
 The goal is to create instance of a robot from DH-table and simulate robot trajectory from given points.
 
-Robot_Path_Generator ?
-
 ## Plan
 Done:
 - [x] Take DH-table input, calculate all t_n matrices and t-matrix
