@@ -1,0 +1,3 @@
+[submodule "tools/Robot_Path_Generator"]
+	path = tools/Robot_Path_Generator
+	url = https://github.com/martinmaeland/Robot_Path_Generator
