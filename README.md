@@ -21,14 +21,12 @@ Maybe in the future:
 * Add inverse kinematics manually and with a point-based path animate the robot.
 
 ![](https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_example_custom_path.png)
-
 (date: 16.04.21)
 
 Video of robot can be seen here: [/res](res)
 
 ![](https://github.com/martinmaeland/Robot_Simulator/blob/master/res/robot_example.png)
-
-(date: )
+(date: unknown)
 
 ## Setting up the workspace
 
