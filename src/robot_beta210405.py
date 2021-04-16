@@ -1,5 +1,5 @@
 import sys
-import os
+#import os
 sys.path.append("../lib")
 
 # Homemade functions
@@ -7,15 +7,10 @@ from tools import *
 
 # Plotting tools
 import matplotlib.pyplot as plt
-#from mpl_toolkits import mplot3d, is this safe to remove?
-import cv2
-import glob
 
 # Symbolic and math tools
 import sympy as sym
-from sympy.solvers import solve
 import numpy as np
-import math
 
 class Robot:
 
@@ -102,7 +97,7 @@ class Robot:
 
         plt.show()
 
-    def animate(self, robot_angles, path):
+    def animate(self, robot_angles, path, loop=False):
 
         fig = plt.figure(figsize=(10, 8))
         ax = fig.gca(projection='3d')
@@ -132,7 +127,7 @@ class Robot:
             # update plot
             if (angle != robot_angles[-1]):
                 plt.draw()
-                plt.pause(0.1)
+                plt.pause(0.005)
                 plt.cla()
-
+                
         plt.show()
