@@ -40,7 +40,6 @@ def main():
             theta = np.arccos((x)/(np.sqrt((np.power(x, 2) + np.power(z-l1, 2))))) # calculate angle of diagonal
         else:
             theta = -np.arccos((x)/(np.sqrt((np.power(x, 2) + np.power(z-l1, 2))))) # calculate angle of diagonal
-        print(theta)
 
         q3 = -(np.pi/2 - 2*(np.pi/4 - np.arccos(diagonal/3)))
         q2 = np.arccos(diagonal/3) + theta
@@ -63,28 +62,34 @@ def main():
 
     # Insert points from csv-file test
     path = [[], [], []]
-    with open("../../Robot_Path_Generator/tmp/path.txt", "r") as path_file:
+    with open("../tools/Robot_Path_Generator/tmp/path.txt", "r") as path_file:
         
         # --- create reader ---
         path_reader = csv.reader(path_file)
 
         # --- read x and z coordinates ---
         first_row = True
+        n_points_skip = 5
+        n_points_count = 0
         for row in path_reader:
             for coordinate in row:
-                if (first_row):
-                    path[0].append(float(coordinate))
-                    path[1].append(0.0)
+                if (n_points_count == n_points_skip):
+                    if (first_row):
+                        path[0].append(float(coordinate))
+                        path[1].append(0.0)
+                    else:
+                        path[2].append(float(coordinate))
+                    
+                    n_points_count = 0
                 else:
-                    path[2].append(float(coordinate))
+                    n_points_count += 1
             
             first_row = False
 
-        print(len(path[0]), len(path[1]), len(path[2]))
+        #print(len(path[0]), len(path[1]), len(path[2]))
 
-    path[0] = path[0]
+    print(len(path[0]))
 
-    print(path)
 
     # Calculate angles from points
     robot_angles = []
